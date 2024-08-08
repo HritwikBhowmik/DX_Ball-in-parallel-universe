@@ -5,9 +5,9 @@
 
 int main() {
 
-    int score = 0;
+    int score = 0, des1 = 0, des2 = 0, des3 = 0, des4 = 0;
     int screenWidth = 501, screenHeight = 501;
-    Color black = {255, 255, 255, 255};
+    Color white = {255, 255, 255, 255};
     InitWindow(screenWidth, screenHeight, "DX Ball");
     SetTargetFPS(60);
 
@@ -37,7 +37,7 @@ int main() {
 
     while(!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(black);
+        ClearBackground(white);
 
         ball.Update();
         plate.Update(); 
@@ -61,6 +61,7 @@ int main() {
                 y1[i] = 0;
                 width1[i] = 0;
                 height1[i] = 0;
+                des1++;
                 score++;
             }
             if (CheckCollisionCircleRec(Vector2{ball.x, ball.y}, ball.radius, Rectangle{x2[i] +63*i, y2[i], width2[i], height2[i]})){
@@ -69,6 +70,7 @@ int main() {
                 y2[i] = 0;
                 width2[i] = 0;
                 height2[i] = 0;
+                des2++;
                 score++;
             }
             if (CheckCollisionCircleRec(Vector2{ball.x, ball.y}, ball.radius, Rectangle{x3[i] +63*i, y3[i], width3[i], height3[i]})){
@@ -77,6 +79,7 @@ int main() {
                 y3[i] = 0;
                 width3[i] = 0;
                 height3[i] = 0;
+                des3++;
                 score++;
             }
             if (CheckCollisionCircleRec(Vector2{ball.x, ball.y}, ball.radius, Rectangle{x4[i] +63*i, y4[i], width4[i], height4[i]})){
@@ -85,6 +88,7 @@ int main() {
                 y4[i] = 0;
                 width4[i] = 0;
                 height4[i] = 0;
+                des4++;
                 score++;
             } 
         }
@@ -92,8 +96,15 @@ int main() {
         DrawText(TextFormat("%i", score), GetScreenWidth()/2, GetScreenHeight()/2, 20, BLACK);
         if (ball.y + ball.radius >= GetScreenHeight()) {
             DrawText(TextFormat("GAME OVER!!"), GetScreenWidth()/2 - 40, GetScreenHeight()/2 - 60, 10, BLACK);
-            sleep(5);
+            sleep(3);
             return 1;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            if (des1 == 8 && des2 == 8 && des3 == 8 && des4 == 8) {
+                sleep(3);
+                return 1;
+            }
         }
 
         ball.Draw();
