@@ -1,5 +1,6 @@
 #include "ball.h"
 #include "nPlate.h"
+#include "sound.h"
 #include <raylib.h>
 #include <unistd.h>
 
@@ -34,6 +35,7 @@ int main() {
 
     nPlate plate = nPlate();
     Ball ball = Ball();
+    Sounds sounds = Sounds();
 
     while(!WindowShouldClose()) {
         BeginDrawing();
@@ -44,7 +46,10 @@ int main() {
         plate.Draw(); 
 
         // for nPlate
-        if (CheckCollisionCircleRec(Vector2{ball.x, ball.y}, ball.radius, Rectangle{plate.x, plate.y, plate.width, plate.height})) ball.speedY *= -1;
+        if (CheckCollisionCircleRec(Vector2{ball.x, ball.y}, ball.radius, Rectangle{plate.x, plate.y, plate.width, plate.height})){
+            ball.speedY *= -1;
+            PlaySound(sounds.plateCollideSound);
+        } 
 
         for (int i = 0; i < 8; i++){
             DrawRectangle(x1[i] + 63* i, y1[i], width1[i], height1[i], BLACK);
@@ -61,6 +66,7 @@ int main() {
                 y1[i] = 0;
                 width1[i] = 0;
                 height1[i] = 0;
+                PlaySound(sounds.brickCollideSound);
                 des1++;
                 score++;
             }
@@ -70,6 +76,7 @@ int main() {
                 y2[i] = 0;
                 width2[i] = 0;
                 height2[i] = 0;
+                PlaySound(sounds.brickCollideSound);
                 des2++;
                 score++;
             }
@@ -79,6 +86,7 @@ int main() {
                 y3[i] = 0;
                 width3[i] = 0;
                 height3[i] = 0;
+                PlaySound(sounds.brickCollideSound);
                 des3++;
                 score++;
             }
@@ -88,6 +96,7 @@ int main() {
                 y4[i] = 0;
                 width4[i] = 0;
                 height4[i] = 0;
+                PlaySound(sounds.brickCollideSound);
                 des4++;
                 score++;
             } 
